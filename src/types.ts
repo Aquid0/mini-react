@@ -3,6 +3,7 @@ export type VNode = {
   props: Record<string, any> | null;
   children: Array<VNode | string>;
   key?: string | number | null;
+  dom?: Node | null;
 };
 
 export type Fiber = {

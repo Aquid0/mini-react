@@ -15,6 +15,7 @@ export function render(vnode: VNode | string | null, container: HTMLElement) {
   }
 
   const element = document.createElement(vnode.type as string);
+  vnode.dom = element; // Store DOM element for reconcilliation
 
   if (vnode.props) {
     for (const [key, value] of Object.entries(vnode.props)) {
