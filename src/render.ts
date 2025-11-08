@@ -18,7 +18,14 @@ export function render(vnode: VNode | string | null, container: HTMLElement) {
 
   if (vnode.props) {
     for (const [key, value] of Object.entries(vnode.props)) {
-      element.setAttribute(key === "className" ? "class" : key, value);
+      if (key.startsWith("on") && typeof value === "function") {
+        const eventName = key.slice(2).toLowerCase();
+        element.addEventListener(eventName, value);
+      } else if (key === "className") {
+        element.setAttribute("class", value);
+      } else {
+        element.setAttribute(key, value);
+      }
     }
   }
 

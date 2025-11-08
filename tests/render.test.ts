@@ -76,4 +76,15 @@ describe("render", () => {
       '<input type="text" placeholder="Enter name" disabled="true">'
     );
   });
+
+  test("handles onClick event handler", () => {
+    const mockHandler = jest.fn();
+    const container = document.createElement("div");
+    const vnode = h("button", { onClick: mockHandler }, "Click me");
+    render(vnode, container);
+
+    const button = container.querySelector("button");
+    button?.click();
+    expect(mockHandler).toHaveBeenCalledTimes(1);
+  });
 });
