@@ -5,5 +5,23 @@ export function createElement(
   props: any,
   ...children: any[]
 ): VNode {
-  return {} as any;
+  const { key, ...restProps } = props || {};
+
+  const flatChildren = children
+    .flat(Infinity)
+    .filter(
+      (child) =>
+        child !== null &&
+        child !== undefined &&
+        child !== true &&
+        child !== false
+    )
+    .map(String);
+
+  return {
+    type,
+    props: props ? restProps : null,
+    children: flatChildren,
+    ...(key !== undefined ? { key } : {}),
+  };
 }

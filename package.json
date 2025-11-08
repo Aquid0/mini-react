@@ -4,11 +4,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "test": "node dev/test-runner.js"
+    "test": "tsx dev/test-runner.js"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
     "glob": "^11.0.3",
+    "tsx": "^4.20.6",
     "typescript": "^5.4.0",
     "vite": "^5.0.0"
   }

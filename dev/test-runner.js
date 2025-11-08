@@ -2,17 +2,17 @@ import { glob } from 'glob';
 import { pathToFileURL } from 'url';
 
 global.describe = (name, fn) => {
-  console.log(`\n${name}`);
+  console.log(`\n\x1b[36m${name}\x1b[0m`);
   fn();
 };
 
 global.test = (name, fn) => {
   try {
     fn();
-    console.log(`  ✓ ${name}`);
+    console.log(`  \x1b[32m✓\x1b[0m ${name}`);
   } catch (error) {
-    console.log(`  ✗ ${name}`);
-    console.log(`    ${error.message}`);
+    console.log(`  \x1b[31m✗\x1b[0m ${name}`);
+    console.log(`    \x1b[31m${error.message}\x1b[0m`);
   }
 };
 
@@ -24,6 +24,9 @@ global.expect = (actual) => ({
     if (JSON.stringify(actual) !== JSON.stringify(expected)) {
       throw new Error(`Expected ${JSON.stringify(expected)}, got ${JSON.stringify(actual)}`);
     }
+  },
+  toBeNull: () => {
+    if (actual !== null) throw new Error(`Expected null, got ${actual}`);
   }
 });
 

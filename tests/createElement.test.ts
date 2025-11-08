@@ -54,4 +54,46 @@ describe("createElement()", () => {
     const vnode = h("div", null, "x");
     expect(vnode.props).toBeNull();
   });
+
+  test("handles no props and no children", () => {
+    const vnode = h("div", null);
+    expect(strip(vnode)).toEqual({ type: "div", props: null, children: [] });
+  });
+
+  test("handles empty props object", () => {
+    const vnode = h("div", {});
+    expect(vnode.props).toEqual({});
+  });
+
+  test("handles special numbers", () => {
+    const vnode = h("div", null, "", 0, NaN, Infinity);
+    expect(strip(vnode).children).toEqual(["", "0", "NaN", "Infinity"]);
+  });
+
+  test("handles empty array children", () => {
+    const vnode = h("div", null, []);
+    expect(strip(vnode).children).toEqual([]);
+  });
+
+  test("handles deeply nested falsy values", () => {
+    const vnode = h("div", null, [null, [undefined, [false]]]);
+    expect(strip(vnode).children).toEqual([]);
+  });
+
+  test("handles null key", () => {
+    const vnode = h("div", { key: null });
+    expect(vnode.key).toBe(null);
+    expect(vnode.props).toEqual({});
+  });
+
+  test("handles falsy but valid key", () => {
+    const vnode = h("div", { key: 0 });
+    expect(vnode.key).toBe(0);
+    expect(vnode.props).toEqual({});
+  });
+
+  test("handles very deep nesting", () => {
+    const vnode = h("div", null, [[[[[["deep"]]]]]]);
+    expect(strip(vnode).children).toEqual(["deep"]);
+  });
 });
