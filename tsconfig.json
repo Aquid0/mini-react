@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "jsx": "react",
+    "strict": false,
+    "moduleResolution": "node",
+    "allowJs": true
+  },
+  "include": ["src", "examples", "tests"],
+  "exclude": ["dev"],
+  "types": ["jest"]
+}
