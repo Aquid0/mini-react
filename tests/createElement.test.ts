@@ -1,7 +1,6 @@
 import { createElement as h } from "../src/createElement.js";
 import type { VNode } from "../src/types";
 
-// Helper to make tests cleaner
 const strip = (vnode: VNode) => JSON.parse(JSON.stringify(vnode));
 
 describe("createElement()", () => {

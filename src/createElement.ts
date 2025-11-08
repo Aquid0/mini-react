@@ -16,7 +16,9 @@ export function createElement(
         child !== true &&
         child !== false
     )
-    .map(String);
+    .map((child) => {
+      return typeof child === "object" && child.type ? child : String(child);
+    });
 
   return {
     type,
