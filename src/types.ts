@@ -13,3 +13,5 @@ export type Fiber = {
   alternate: Fiber | null;
   hooks: any[] | null;
 };
+
+export type UpdateOperation = "MOUNT" | "UNMOUNT" | "UPDATE" | "REPLACE";
