@@ -28,9 +28,6 @@ export type VNode = {
  * This is the "memory" of a component between renders.
  */
 export type Fiber = {
-  /** The function component this fiber represents */
-  type: Function;
-
   /** Array storing hook state (useState, useEffect, etc.) in order of hook calls */
   hooks: any[] | null;
 

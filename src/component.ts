@@ -45,7 +45,6 @@ export function renderComponent(
   container: HTMLElement
 ): VNode | string | null {
   const fiber: Fiber = vnode.fiber || {
-    type: vnode.type as Function,
     hooks: [],
     vnode,
     container: container || null,
