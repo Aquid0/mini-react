@@ -46,9 +46,6 @@ export function renderComponent(
 ): VNode | string | null {
   const fiber: Fiber = vnode.fiber || {
     type: vnode.type as Function,
-    props: vnode.props,
-    dom: null,
-    alternate: null,
     hooks: [],
     vnode,
     container: container || null,

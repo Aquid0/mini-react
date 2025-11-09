@@ -172,6 +172,7 @@ export function update(
 ) {
   if (prevVNode === nextVNode) return;
 
+  // Copy DOM reference from prev to next VNode to maintain continuity across updates
   if (
     prevVNode &&
     nextVNode &&
