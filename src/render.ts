@@ -1,3 +1,4 @@
+import { renderComponent } from "./component";
 import type { VNode } from "./types";
 
 /**
@@ -25,7 +26,7 @@ export function render(vnode: VNode | string | null, container: HTMLElement) {
   }
 
   if (typeof vnode.type === "function") {
-    const result = vnode.type(vnode.props);
+    const result = renderComponent(vnode);
     render(result, container);
     return;
   }

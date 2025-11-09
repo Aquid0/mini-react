@@ -4,6 +4,7 @@ export type VNode = {
   children: Array<VNode | string>;
   key?: string | number | null;
   dom?: Node | null;
+  fiber?: Fiber | null;
 };
 
 export type Fiber = {
