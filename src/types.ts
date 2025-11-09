@@ -14,6 +14,8 @@ export type Fiber = {
   alternate: Fiber | null;
   hooks: any[] | null;
   vnode?: VNode | null;
+  container?: HTMLElement | null;
+  renderedVNode?: VNode | string | null;
 };
 
 export type UpdateOperation = "MOUNT" | "UNMOUNT" | "UPDATE" | "REPLACE";

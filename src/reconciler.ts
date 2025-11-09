@@ -171,6 +171,17 @@ export function update(
   index?: number
 ) {
   if (prevVNode === nextVNode) return;
+
+  if (
+    prevVNode &&
+    nextVNode &&
+    typeof prevVNode === "object" &&
+    typeof nextVNode === "object" &&
+    prevVNode.dom
+  ) {
+    nextVNode.dom = prevVNode.dom;
+  }
+
   const operation = getUpdateOperation(prevVNode, nextVNode);
 
   switch (operation) {

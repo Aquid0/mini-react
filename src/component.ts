@@ -13,6 +13,9 @@ export let currentFiber: Fiber | null = null;
  * Increments with each hook call to map hooks to their position in fiber.hooks array.
  */
 export let hookIndex = 0;
+export function incrementHookIndex() {
+  hookIndex++;
+}
 
 /**
  * Renders a function component by setting up its fiber and calling the component function.
@@ -37,7 +40,10 @@ export let hookIndex = 0;
  * // result: { type: "div", props: null, children: ["Count: 0"] }
  * // vnode.fiber now contains the component's fiber for future renders
  */
-export function renderComponent(vnode: VNode): VNode | string | null {
+export function renderComponent(
+  vnode: VNode,
+  container: HTMLElement
+): VNode | string | null {
   const fiber: Fiber = vnode.fiber || {
     type: vnode.type as Function,
     props: vnode.props,
@@ -45,6 +51,7 @@ export function renderComponent(vnode: VNode): VNode | string | null {
     alternate: null,
     hooks: [],
     vnode,
+    container: container || null,
   };
 
   vnode.fiber = fiber;
@@ -57,6 +64,8 @@ export function renderComponent(vnode: VNode): VNode | string | null {
   hookIndex = 0;
 
   const result = (vnode.type as Function)(vnode.props);
+
+  fiber.renderedVNode = result;
 
   currentFiber = prevFiber;
   hookIndex = prevHookIndex;

@@ -2,19 +2,6 @@
 <html>
   <body>
     <div id="root"></div>
-    <script type="module">
-      import { createElement as h, render, useState } from "../src/index.js";
-
-      function Counter() {
-        const [count, setCount] = useState(0);
-        return h(
-          "button",
-          { onClick: () => setCount(count + 1) },
-          "Count: " + count
-        );
-      }
-
-      render(h(Counter, null), document.getElementById("root"));
-    </script>
+    <script type="module" src="./counter.ts"></script>
   </body>
 </html>

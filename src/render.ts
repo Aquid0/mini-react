@@ -26,7 +26,7 @@ export function render(vnode: VNode | string | null, container: HTMLElement) {
   }
 
   if (typeof vnode.type === "function") {
-    const result = renderComponent(vnode);
+    const result = renderComponent(vnode, container);
     render(result, container);
     return;
   }

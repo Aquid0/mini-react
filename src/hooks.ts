@@ -1,11 +1,39 @@
 // TASKS 6–10: implement hooks (useState, useReducer, useRef, useEffect, useMemo, useCallback)
 
-import { currentFiber, hookIndex } from "./component";
+import {
+  currentFiber,
+  hookIndex,
+  incrementHookIndex,
+  renderComponent,
+} from "./component";
 
-// TODO: hook storage shape, effect queue, batching, etc.
+import { update } from "./reconciler";
 
 export function useState(initial: any) {
-  // TODO
+  const fiber = currentFiber;
+  const index = hookIndex;
+  incrementHookIndex();
+
+  if (!fiber.hooks[index]) {
+    fiber.hooks[index] = { state: initial };
+  }
+
+  const hook = fiber.hooks[index];
+
+  const setState = (newState: any) => {
+    hook.state =
+      typeof newState === "function" ? newState(hook.state) : newState;
+
+    const container = fiber.container;
+    if (container && fiber.vnode) {
+      const oldRendered = fiber.renderedVNode;
+      const newRendered = renderComponent(fiber.vnode, container);
+
+      update(container, oldRendered, newRendered);
+    }
+  };
+
+  return [hook.state, setState];
 }
 
 export function useReducer(reducer: any, initialArg: any, init?: any) {
