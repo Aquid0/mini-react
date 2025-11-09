@@ -311,4 +311,41 @@ describe("renderComponent", () => {
       ],
     });
   });
+
+  test("creates bidirectional reference between vnode and fiber", () => {
+    const Component = () => h("div", null, "Hello");
+    const vnode = h(Component, null);
+
+    renderComponent(vnode);
+
+    expect(vnode.fiber).toBeDefined();
+    expect(vnode.fiber?.vnode).toBe(vnode);
+  });
+
+  test("maintains bidirectional reference on re-render", () => {
+    const Component = () => h("div", null, "Hello");
+    const vnode = h(Component, null);
+
+    renderComponent(vnode);
+    const fiber = vnode.fiber;
+
+    renderComponent(vnode);
+
+    expect(vnode.fiber).toBe(fiber);
+    expect(fiber?.vnode).toBe(vnode);
+  });
+
+  test("fiber.vnode reference is updated on each render", () => {
+    const Component = () => h("div", null, "Hello");
+    const vnode = h(Component, null);
+
+    renderComponent(vnode);
+    const fiber = vnode.fiber;
+
+    // Render again
+    renderComponent(vnode);
+
+    // Fiber should still point to the same vnode
+    expect(fiber?.vnode).toBe(vnode);
+  });
 });

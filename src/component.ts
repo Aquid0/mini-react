@@ -44,9 +44,11 @@ export function renderComponent(vnode: VNode): VNode | string | null {
     dom: null,
     alternate: null,
     hooks: [],
+    vnode,
   };
 
   vnode.fiber = fiber;
+  fiber.vnode = vnode;
 
   const prevFiber = currentFiber;
   const prevHookIndex = hookIndex;

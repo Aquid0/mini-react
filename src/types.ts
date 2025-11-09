@@ -13,6 +13,7 @@ export type Fiber = {
   dom: Node | null;
   alternate: Fiber | null;
   hooks: any[] | null;
+  vnode?: VNode | null;
 };
 
 export type UpdateOperation = "MOUNT" | "UNMOUNT" | "UPDATE" | "REPLACE";
