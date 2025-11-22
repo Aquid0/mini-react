@@ -59,6 +59,8 @@ export function renderComponent(
   currentFiber = fiber;
   hookIndex = 0;
 
+  // e.g., const result = Counter(vnode.props);
+  // Counter contains hooks which are each called in order, using currentFiber and hookIndex to track state
   const result = (vnode.type as Function)(vnode.props);
 
   fiber.renderedVNode = result;
