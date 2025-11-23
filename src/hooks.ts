@@ -11,10 +11,10 @@ import { update } from "./reconciler";
 
 /**
  * Returns a stateful value and a function to update it.
- * 
+ *
  * @param initial - The initial state value
  * @returns A tuple containing the current state and a setter function
- * 
+ *
  * @example
  * const [count, setCount] = useState(0);
  * setCount(1); // Set to new value
@@ -47,15 +47,14 @@ export function useState(initial: any) {
   return [hook.state, setState];
 }
 
-
 /**
  * An alternative to useState for managing complex state logic.
- * 
+ *
  * @param reducer - Function that specifies how state gets updated: (state, action) => newState
  * @param initialArg - The initial state value, or argument passed to init function
  * @param init - Optional function to lazily calculate initial state: (initialArg) => initialState
  * @returns A tuple containing the current state and a dispatch function
- * 
+ *
  * @example
  * const reducer = (state, action) => {
  *   switch (action.type) {
@@ -73,14 +72,17 @@ export function useReducer(reducer: any, initialArg: any, init?: any) {
   incrementHookIndex();
 
   if (!fiber.hooks[index]) {
-    fiber.hooks[index] = typeof init === 'function' ? { state : (init as Function)(initialArg)} : { state: initialArg };
+    fiber.hooks[index] =
+      typeof init === "function"
+        ? { state: (init as Function)(initialArg) }
+        : { state: initialArg };
   }
 
   const hook = fiber.hooks[index];
-  
+
   const dispatch = (action: any) => {
     hook.state = reducer(hook.state, action);
-    
+
     const container = fiber.container;
     if (container && fiber.vnode) {
       const oldRendered = fiber.renderedVNode;
@@ -94,7 +96,17 @@ export function useReducer(reducer: any, initialArg: any, init?: any) {
 }
 
 export function useRef(initial: any) {
-  // TODO
+  const fiber = currentFiber;
+  const index = hookIndex;
+  incrementHookIndex();
+
+  if (!fiber.hooks[index]) {
+    fiber.hooks[index] = { current: initial };
+  }
+
+  const hook = fiber.hooks[index];
+
+  return hook;
 }
 
 export function useEffect(create: any, deps?: any[]) {
