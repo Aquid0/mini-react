@@ -114,9 +114,33 @@ export function useEffect(create: any, deps?: any[]) {
 }
 
 export function useMemo(factory: any, deps: any[]) {
-  // TODO
+  const fiber = currentFiber;
+  const index = hookIndex;
+  incrementHookIndex();
+
+  if (!fiber.hooks[index] || !isSameDeps(fiber.hooks[index].deps, deps)) {
+    fiber.hooks[index] = { deps, value: factory() };
+  }
+
+  return fiber.hooks[index].value;
+}
+
+function isSameDeps(deps1: any[], deps2: any[]) {
+  if (deps1.length !== deps2.length) return false;
+  for (let i = 0; i < deps1.length; i++) {
+    if (!Object.is(deps1[i], deps2[i])) return false;
+  }
+  return true;
 }
 
 export function useCallback(fn: any, deps: any[]) {
-  // TODO
+  const fiber = currentFiber;
+  const index = hookIndex;
+  incrementHookIndex();
+
+  if (!fiber.hooks[index] || !isSameDeps(fiber.hooks[index].deps, deps)) {
+    fiber.hooks[index] = { fn, deps };
+  }
+
+  return fiber.hooks[index].fn;
 }
